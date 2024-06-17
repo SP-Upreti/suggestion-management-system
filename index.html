@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="Style.css">
+	<title>Suggestion Management System</title>
+</head>
+
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+
+	body {
+		height: 100vh;
+		width: 100vw;
+		box-sizing: border-box;
+		background-size: cover;
+		background-position: center;
+		padding: 8rem 4rem;
+
+	}
+
+	h2 {
+		font-size: 3rem;
+	}
+
+
+	button {
+		width: 250px;
+		padding: 15px 0;
+		font-size: 1.5rem;
+		border: none;
+		outline: none;
+		border-radius: 10px;
+		cursor: pointer;
+		transition: all 0.2s ease-in-out;
+		background-color: rgba(47, 108, 250, 0.797);
+		color: white;
+	}
+
+	.w-25 {
+		width: 30%;
+	}
+
+	.w-75 {
+		width: 55%;
+	}
+
+	.right {
+		animation: animate 8s infinite ease-in-out;
+	}
+
+	.flex {
+		display: flex;
+	}
+
+
+	.flex-col {
+		flex-direction: column;
+	}
+
+	.gap-2 {
+		gap: 1rem !important;
+	}
+
+	li {
+		list-style: none;
+	}
+
+	ul {
+		display: flex;
+		justify-content: space-between;
+		width: 100vw;
+		padding: 1rem 5rem;
+		box-sizing: border-box;
+	}
+
+	button:hover {
+		box-shadow: 2px 2px 4px rgb(132, 132, 132);
+	}
+
+	.gap-4 {
+		gap: 2rem
+	}
+
+	.items-center {
+		align-items: center;
+	}
+
+	p {
+		font-size: 1.3rem;
+		line-height: 1.7rem;
+		/* letter-spacing: 2px; */
+		font-family: sans-serif;
+	}
+
+	.blur {
+		backdrop-filter: blur(6px);
+		padding: 8rem 4rem;
+	}
+
+	.mb-3 {
+		margin-bottom: 3rem;
+	}
+
+	.gap-4 {
+		gap: 4rem;
+	}
+
+	img {
+		height: 400px !important;
+		border-radius: 10rem;
+	}
+</style>
+
+<body class="flex jusify-center items-center gap-4">
+	<div class="w-75">
+		<div class="flex flex-col gap-3 mb-3">
+			<h2 class="flex flex-col" style="line-height: 49px;">
+				<span>Empower Your Voice </span>
+				<span>with Our System</span>
+			</h2>
+			<p style="width: 100%;">Welcome to our Suggestion Management System, where your ideas and feedback shape the
+				future of our
+				college.
+				Easily share your thoughts with the right departments and receive timely responses, ensuring that every
+				voice is heard and valued. Join us in fostering a collaborative and innovative educational
+				environment—your
+				suggestions drive our progress!</p>
+		</div>
+
+		<div class="flex gap-2">
+			<div class="">
+				<span><a href="Register.php">
+						<button data-tooltip="click here to file a suggestion" data-flow="top">Suggestion</button>
+					</a>
+				</span>
+			</div>
+			<div class="">
+				<span>
+					<a href="Feedback.php"><button data-tooltip="click here to see suggestion status"
+							data-flow="top">Feedback</button>
+					</a>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="w-25 flex jusify-center items-center right" style=" overflow: hidden;">
+		<img src="./assets/img3.jpg" alt="">
+	</div>
+
+
+	<script src="https://kit.fontawesome.com/e9ffc8e955.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
