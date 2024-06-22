@@ -1,39 +1,67 @@
 <?php
 include('../connection.php');
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
     $feedback = $_POST['response'];
     $suggestion_id = $_POST['suggestion_id'];
-    $sql = "SELECT feedback FROM feedback WHERE suggestion_id = '$suggestion_id'";
-    $data = mysqli_query($conn, $sql);
 
-    if (mysqli_num_rows($data) > 0) {
+    // Check if the suggestion has already been responded to
+    $stmt = $conn->prepare("SELECT feedback FROM feedback WHERE suggestion_id = ?");
+    $stmt->bind_param("i", $suggestion_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
         echo "
             <script>
                 alert('This suggestion is already responded');
+                window.location.href='./index.php';
             </script>
-            ";
+        ";
     } else {
-        $query = "INSERT INTO feedback (suggestion_id, feedback) VALUES ('$suggestion_id', '$feedback')";
-        $result = mysqli_query($conn, $query);
+        // Insert feedback
+        $stmt = $conn->prepare("INSERT INTO feedback (suggestion_id, feedback) VALUES (?, ?)");
+        $stmt->bind_param("is", $suggestion_id, $feedback);
+        $result = $stmt->execute();
+
         if ($result) {
-            echo "
-            <script>
-                alert('submitted');
-            </script>
-            ";
+            // Update the suggestion as responded
+            $stmt = $conn->prepare("UPDATE suggestion SET responded = 1 WHERE id = ?");
+            $stmt->bind_param("i", $suggestion_id);
+            $result = $stmt->execute();
+
+            if ($result) {
+                echo "
+                    <script>
+                        alert('Feedback submitted successfully');
+                        window.location.href='./index.php';
+                    </script>
+                ";
+            } else {
+                echo "
+                    <script>
+                        alert('Error updating suggestion: " . $stmt->error . "');
+                        window.location.href='./index.php';
+                    </script>
+                ";
+            }
         } else {
-            echo "Error: " . $query->error;
+            echo "
+                <script>
+                    alert('Error submitting feedback: " . $stmt->error . "');
+                    window.location.href='./index.php';
+                </script>
+            ";
         }
-
     }
+    $stmt->close();
+} else {
     echo "
-    <script>
-        window.location.href='./index.php';
-    </script>
+        <script>
+            alert('Form not submitted correctly');
+            window.location.href='./index.php';
+        </script>
     ";
-} 
-else {
-    echo "Form not submitted correctly";
 }
-
+$conn->close();
 ?>

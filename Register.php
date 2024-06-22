@@ -73,7 +73,7 @@
         overflow: hidden;
         backdrop-filter: blur(16px);
         padding: 4rem 2rem !important;
-        border: 2px solid;
+        /* border: 2px solid; */
         backdrop-filter: blur(12px);
         /* height: 500px; */
         overflow: hidden !important;
@@ -108,13 +108,13 @@
         $department = $_POST['department'];
         $suggestion = $_POST['message'];
 
-        $public = isset($_POST['public'])?true:false;
+        // $public = isset($_POST['public'])?true:false;
 
 
         
         include('connection.php');
 
-        $sql = "INSERT INTO suggestion (name,department,email,suggestion,public) VALUES ('$name','$department','$email','$suggestion','$public')";
+        $sql = "INSERT INTO suggestion (name,department,email,suggestion) VALUES ('$name','$department','$email','$suggestion')";
 
         $query = mysqli_query($conn, $sql);
 
@@ -130,14 +130,15 @@
 
 
 <body class="">
-    <a href="index.html">
-        <button class="homeNav">Home</button>
-    </a>
+    <?php
+    include("HomeNav.php");
+    ?>
+    
     <div class="screen-container">
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="blur flex gap-2 flex-col" method='post' onsubmit="return validateForm()">
             <div class="">
                 <div class="flex mb-3">
-                    <h2>Suggestion Box</h2>
+                    <h2>Suggestion</h2>
                 </div>
             </div>
             <div class="flex gap-2">
@@ -165,7 +166,7 @@
                             <div class="flex flex-col">
                                 <label for="department">Department</label>
                                 <select name="department" id="department" required>
-                                    <option value="" disabled selected><span id="default">select</span>
+                                    <option value="" disabled selected style='color:blue;'><span id="default">select</span>
                                     </option>
                                     <option value="account">Account Department</option>
                                     <option value="cleaning">Cleaning Department</option>
@@ -184,10 +185,10 @@
                         <textarea name="message" id="message" rows="6" placeholder="write here..." minlength="100"
                             required></textarea>
                     </div>
-                    <div class="flex gap-1">
+                    <!-- <div class="flex gap-1">
                         <input type="checkbox" id="public" name="public" style="width: auto;">
                         <label for="public" style="font-size: 1rem;font-weight: 400;">make my suggestion public</label>
-                    </div>
+                    </div> -->
                     <div class="flex">
                         <button class="primaryButton" name='submit'>submit</button>
                     </div>
@@ -201,7 +202,7 @@
         
        <?php
             include('connection.php');
-            $sql = "SELECT name, suggestion, department FROM suggestion WHERE public = '1'";
+            $sql = "SELECT name, suggestion, department FROM suggestion ";
             $data = mysqli_query($conn, $sql);
             
             while ($row = mysqli_fetch_assoc($data)){

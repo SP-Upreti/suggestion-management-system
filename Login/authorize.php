@@ -7,7 +7,7 @@
         $sql = "SELECT department,email FROM users WHERE email = '$email' AND passowrd = '$passowrd'";
 
         $data = mysqli_query($conn, $sql);
-
+        $user = mysqli_fetch_assoc($data);
         if(mysqli_num_rows($data) == 0){
             echo "
             <script>
@@ -16,8 +16,7 @@
             </script>
             ";
         }
-        else {
-            $user = mysqli_fetch_assoc($data);
+        else if($user['department'] != 'admin') {
             session_start();
             $_SESSION['email'] = $user['email'];
             echo "
@@ -30,6 +29,15 @@
             // echo "<a href='../Department?name=".$user['name']."&department=".$user['department'].">ok</a>";
 
         
+        }
+        else {
+            session_start();
+            $_SESSION['email'] = $user['email'];
+            echo "
+              <script>
+            window.location.href = '../Admin';
+            </script>
+            ";
         }
     }
 ?>
